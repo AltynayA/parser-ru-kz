@@ -1,0 +1,9 @@
+version: "3.9"
+
+services:
+  pdf-ocr-api:
+    build: .
+    container_name: pdf_ocr_api
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
