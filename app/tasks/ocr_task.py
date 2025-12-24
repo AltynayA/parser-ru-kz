@@ -32,11 +32,13 @@ def run_ocr_task(result_id: str, pdf_path: str, heading: str | None):
             # text = image_to_text(img)
             full_text += page_text + "\n"
 
-            if heading and not extracted_text:
-                if heading.lower().strip() in page_text.lower():
-                    extracted_text = extract_text_after_heading(page_text, heading)
-
-        if not heading:
+        # Extract text after heading from combined full_text
+        if heading:
+            extracted_text = extract_text_after_heading(full_text, heading)
+            # Fallback to full_text if heading not found
+            if not extracted_text.strip():
+                extracted_text = full_text
+        else:
             extracted_text = full_text
 
         duration = time.time() - start_time
