@@ -35,7 +35,7 @@ async def extract_pdf(
     return OCRJobResponse(id=result_id, status="processing")
 
 # GET: retrieve result
-@app.get("/result/{result_id}", response_model=OCRCompletedResponse | OCRProcessingResponse)
+@app.get("/result/{result_id}", response_model = OCRCompletedResponse)
 def get_extraction_result(result_id: str):
     result = get_result(result_id)
 
@@ -49,7 +49,16 @@ def get_extraction_result(result_id: str):
         id=result_id,
         status="completed",
         heading=result.get("heading"),
-        # full_text=result.get("full_text"),
-        extracted_text=result.get("extracted_text"),
+        extracted_text=result.get("extracted_text",""),
+                full_text=result.get("full_text", ""),
         duration_seconds=result.get("duration_seconds", 0)
     )
+
+
+# @app.get("/debug-pdf/{result_id}")
+# def debug_pdf(result_id: str):
+#     from app.storage.memory import get_result
+#     result = get_result(result_id)
+#     import os
+#     # Find recent temp PDFs or log paths
+#     return {"storage": list(STORAGE.keys()), "result": result}

@@ -12,7 +12,8 @@ class OCRProcessingResponse(BaseModel):
 class OCRCompletedResponse(BaseModel):
     id: str
     status: str
-    # full_text: str
-    heading: Optional[str]
-    heading: str | None = None
+    heading: Optional[str] = None
+    full_text: str
+    extracted_text: str
     duration_seconds: float
+
