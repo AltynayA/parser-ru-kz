@@ -1,4 +1,5 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException, BackgroundTasks
+from typing import Union
 import tempfile
 from app.storage.memory import save_result, get_result
 from app.tasks.ocr_task import run_ocr_task
@@ -35,7 +36,7 @@ async def extract_pdf(
     return OCRJobResponse(id=result_id, status="processing")
 
 # GET: retrieve result
-@app.get("/result/{result_id}", response_model = OCRCompletedResponse)
+@app.get("/result/{result_id}", response_model=Union[OCRProcessingResponse, OCRCompletedResponse])
 def get_extraction_result(result_id: str):
     result = get_result(result_id)
 
@@ -50,7 +51,7 @@ def get_extraction_result(result_id: str):
         status="completed",
         heading=result.get("heading"),
         extracted_text=result.get("extracted_text",""),
-                full_text=result.get("full_text", ""),
+        full_text=result.get("full_text", ""),
         duration_seconds=result.get("duration_seconds", 0)
     )
 

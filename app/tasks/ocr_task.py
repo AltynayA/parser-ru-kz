@@ -24,6 +24,7 @@ def run_ocr_task(result_id: str, pdf_path: str, heading: str | None):
     try:
         images = pdf_to_images(pdf_path)
         full_text = ""
+        extracted_text = ""
 
         for idx, img in enumerate(images):
             logger.info(f"[OCR] Processing page {idx+1}/{len(images)}")
