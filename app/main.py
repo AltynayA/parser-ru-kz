@@ -3,7 +3,8 @@ from typing import Union
 import tempfile
 from app.storage.memory import save_result, get_result
 from app.tasks.ocr_task import run_ocr_task
-from app.models import OCRJobResponse, OCRProcessingResponse, OCRCompletedResponse
+# from app.models import OCRJobResponse, OCRProcessingResponse, OCRCompletedResponse
+from app.models import OCRResponse
 
 app = FastAPI(title="PDF OCR Extractor", version="1.0.0")
 
@@ -13,7 +14,7 @@ def health_check():
     return {"status": "ok"}
 
 # POST: upload PDF
-@app.post("/extract", response_model=OCRJobResponse)
+@app.post("/extract", response_model=OCRResponse)
 async def extract_pdf(
     file: UploadFile = File(...), 
     heading: str = "",  
@@ -33,33 +34,40 @@ async def extract_pdf(
         heading if heading else None
     )
 
-    return OCRJobResponse(id=result_id, status="processing")
+    return OCRResponse(id=result_id, status="processing")
 
 # GET: retrieve result
-@app.get("/result/{result_id}", response_model=Union[OCRProcessingResponse, OCRCompletedResponse])
+# @app.get("/result/{result_id}", response_model=Union[OCRProcessingResponse, OCRCompletedResponse])
+# def get_extraction_result(result_id: str):
+#     result = get_result(result_id)
+
+#     if not result:
+#         raise HTTPException(status_code=404, detail="Result not found")
+
+#     if result["status"] == "processing":
+#         return OCRProcessingResponse(id=result_id, status="processing")
+
+#     return OCRCompletedResponse(
+#         id=result_id,
+#         status="completed",
+#         heading=result.get("heading"),
+#         extracted_text=result.get("extracted_text",""),
+#         full_text=result.get("full_text", ""),
+#         duration_seconds=result.get("duration_seconds", 0)
+#     )
+
+@app.get("/result/{result_id}", response_model=OCRResponse)
 def get_extraction_result(result_id: str):
     result = get_result(result_id)
 
     if not result:
         raise HTTPException(status_code=404, detail="Result not found")
 
-    if result["status"] == "processing":
-        return OCRProcessingResponse(id=result_id, status="processing")
-
-    return OCRCompletedResponse(
+    return OCRResponse(
         id=result_id,
-        status="completed",
+        status=result["status"],
         heading=result.get("heading"),
-        extracted_text=result.get("extracted_text",""),
-        full_text=result.get("full_text", ""),
-        duration_seconds=result.get("duration_seconds", 0)
+        extracted_text=result.get("extracted_text"),
+        duration_seconds=result.get("duration_seconds"),
+        full_text=result.get("full_text"),
     )
-
-
-# @app.get("/debug-pdf/{result_id}")
-# def debug_pdf(result_id: str):
-#     from app.storage.memory import get_result
-#     result = get_result(result_id)
-#     import os
-#     # Find recent temp PDFs or log paths
-#     return {"storage": list(STORAGE.keys()), "result": result}
