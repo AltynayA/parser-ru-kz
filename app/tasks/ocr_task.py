@@ -33,13 +33,15 @@ def run_ocr_task(result_id: str, pdf_path: str, heading: str | None):
             full_text += page_text + "\n"
 
         # Extract text after heading from combined full_text
-        if heading:
-            extracted_text = extract_text_after_heading(full_text, heading)
-            # Fallback to full_text if heading not found
-            if not extracted_text.strip():
-                extracted_text = full_text
-        else:
+            if heading and not extracted_text:
+                if heading.lower().strip() in page_text.lower():
+                    extracted_text = extract_text_after_heading(page_text, heading)
+                # extracted_text = extract_text_after_heading(full_text, heading)
+                # Fallback to full_text if heading not found
+        if not heading:
             extracted_text = full_text
+        elif not extracted_text:
+            extracted_text = ""  
 
         duration = time.time() - start_time
 
@@ -60,8 +62,8 @@ def run_ocr_task(result_id: str, pdf_path: str, heading: str | None):
                 "result_id": result_id,
                 # "status": "completed",
                 "heading": heading,
-                "full_text": full_text.strip(),
                 "extracted_text": extracted_text.strip(),
+                "full_text": full_text.strip(),
                 "duration_seconds": round(duration, 3)
             }, f, ensure_ascii=False, indent=2)
             
