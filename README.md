@@ -108,12 +108,9 @@ API will be available at:
 ### Before vs After
 
 <div align="center">
-  <img src="./screenshots/original-pdf-fragment.png" width="49%" alt="Original PDF"/>
-  <img src="./screenshots/extracted-clean.png"      width="49%" alt="Clean extracted result"/>
+  <img src="./screenshots/original-pdf-fragment.jpg" width="49%" alt="Original PDF"/>
+  <img src="./screenshots/extracted-clean.jpg"      width="49%" alt="Clean extracted result"/>
 </div>
 
-## License
-
-MIT (or choose any license you prefer)
 
 ---
