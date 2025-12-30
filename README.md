@@ -90,8 +90,8 @@ docker-compose up -d --build
 ### Before vs After
 
 <div align="center">
-  <img src="screenshots/original-pdf-fragment.jpg" width="49%" alt="Original PDF"/>
-  <img src="screenshots/extracted-clean.jpg"      width="49%" alt="Clean extracted result"/>
+  <img src="./screenshots/original-pdf-fragment.jpg" width="49%" alt="Original PDF"/>
+  <img src="./screenshots/extracted-clean.jpg"      width="49%" alt="Clean extracted result"/>
 </div>
 
 
