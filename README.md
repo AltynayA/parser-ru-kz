@@ -87,24 +87,6 @@ docker-compose up --build
 docker-compose up -d --build
 ```
 
-API will be available at:  
-`http://localhost:8000`
-
-## Possible Improvements (roadmap ideas)
-
-- Better heading detection (fuzzy search, multiple variants, Levenshtein)
-- Per-page heading search + smart concatenation
-- Table recognition support (tabula / camelot / paddleocr / etc.)
-- Language auto-detection
-- Better error handling & retry mechanism
-- Real task queue (Celery / RQ / dramatiq)
-- Result storage: Redis / PostgreSQL instead of in-memory
-- Result expiration & cleanup job
-- Webhook / callback after processing
-- Multiple headings extraction at once
-- Confidence level filtering
-- Preprocessing images (deskew, contrast, binarization)
-
 ### Before vs After
 
 <div align="center">
