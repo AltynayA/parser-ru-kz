@@ -56,26 +56,6 @@ If heading provided? ────────→│ Find heading │→ Crop/ext
 - **Pillow** (PIL)
 - **Docker** + **docker-compose**
 
-## Project Structure (current)
-
-```
-.
-├── app/
-│   ├── main.py               # (not shown - most likely FastAPI app)
-│   ├── ocr/
-│   │   ├── pdf_converter.py
-│   │   ├── ocr_engine.py
-│   │   └── text_utils.py
-│   └── tasks/
-│       └── ocr_task.py
-├── storage/
-│   ├── logs/
-│   │   ├── json/
-│   │   └── texts/
-├── Dockerfile
-├── docker-compose.yml
-└── requirements.txt
-```
 
 ## Installation (Docker)
 
